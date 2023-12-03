@@ -8,11 +8,11 @@ current_folder = os.getcwd()  # Carpeta actual
 def extract_vouchers():
     
     init_time = time.time() #Variable para calcular tiempo de ejecución
-    
+     
     vouchers_root_folder = os.path.join(current_folder, '..', data_folder , 'Boletas')  # Carpeta de boletas
     vouchers_dataframes = [] # Lista de dataframes de boletas
     
-    for foldername, subfolders, filenames in os.walk(vouchers_root_folder): # Recorre la carpeta de boletas por cada carpeta, subcarpeta y archivo
+    for foldername, subfolders, filenames in os.walk(vouchers_root_folder): # Recorre la carpeta de boletas por cada carpeta y archivo
         for filename in filenames:  # Recorre los archivos de cada carpeta
             if filename.endswith('.csv'):   # Si el archivo es un csv
                 file_path = os.path.join(foldername, filename)  # Ruta del archivo
@@ -44,7 +44,7 @@ def extract_bills():
     bills_root_folder = os.path.join(current_folder, '..',data_folder, 'Facturas')  # Carpeta de facturas
     bills_dataframes = [] # Lista de dataframes de facturas
     
-    for foldername, subfolders, filenames in os.walk(bills_root_folder): # Recorre la carpeta de facturas por cada carpeta, subcarpeta y archivo
+    for foldername, subfolders, filenames in os.walk(bills_root_folder): # Recorre la carpeta de facturas por cada carpeta y archivo
         for filename in filenames:  # Recorre los archivos de cada carpeta
             if filename.endswith('.csv'):   # Si el archivo es un csv
                 file_path = os.path.join(foldername, filename)  # Ruta del archivo
@@ -73,7 +73,7 @@ def extract_inventory():
     inventory_root_folder = os.path.join(current_folder, '..',data_folder, 'Inventario')  # Carpeta de inventario
     inventory_dataframes = [] # Lista de dataframes de inventario
     
-    for foldername, subfolders, filenames in os.walk(inventory_root_folder): # Recorre la carpeta de inventario por cada carpeta, subcarpeta y archivo
+    for foldername, subfolders, filenames in os.walk(inventory_root_folder): # Recorre la carpeta de inventario por cada carpeta y archivo
         for filename in filenames:  # Recorre los archivos de cada carpeta
             if filename.endswith('.csv'):   # Si el archivo es un csv
                 file_path = os.path.join(foldername, filename)  # Ruta del archivo
@@ -102,7 +102,7 @@ def extract_prices():
     prices_root_folder = os.path.join(current_folder, '..', data_folder, 'Precios')  # Carpeta de precios
     prices_dataframes = [] # Lista de dataframes de precios
     
-    for foldername, subfolders, filenames in os.walk(prices_root_folder): # Recorre la carpeta de precios por cada carpeta, subcarpeta y archivo
+    for foldername, subfolders, filenames in os.walk(prices_root_folder): # Recorre la carpeta de precios por cada carpeta y archivo
         for filename in filenames:  # Recorre los archivos de cada carpeta
             if filename.endswith('.csv'):   # Si el archivo es un csv
                 file_path = os.path.join(foldername, filename)  # Ruta del archivo
@@ -125,6 +125,20 @@ def extract_prices():
     return prices_dataframes
 
 vouchers = extract_vouchers()
+print('-\tCantidad de archivos Boletas:', len(vouchers)) #Imprime la cantidad de boletas
+print('\n',vouchers[0].head())
+
 bills = extract_bills()
+print('-\tCantidad de archivos Facturas:', len(bills))
+print('\n',bills[0].head())
+
 inventory = extract_inventory()
+print('-\tCantidad de archivos Inventario:', len(inventory))
+print('\n',inventory[0].head())
+
 prices = extract_prices()
+print('-\tCantidad de archivos Precios:', len(prices))
+print('\n',prices[0].head())
+
+
+
