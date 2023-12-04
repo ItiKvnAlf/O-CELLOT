@@ -77,6 +77,13 @@ sqlalchemy está diseñado para un acceso eficiente y de alto rendimiento a base
 pip install SQLAlchemy
 ```
 
+### psycopg2
+psycopg es el adaptador de base de datos PostgreSQL más popular para el lenguaje de programación Python. Este es el comando de instalación:
+
+```bash
+pip install psycopg2
+```
+
 ## Paso 6
 
 Una vez que todos los módulos estén instalados correctamente, ejecutar el script; Puede llevar algo de tiempo, pero se deberían ver los resultados en la terminal, incluido el tiempo necesario para completar cada operación, la cantidad total de archivos en cada carpeta y las primeras 5 filas de uno de los DataFrames.
