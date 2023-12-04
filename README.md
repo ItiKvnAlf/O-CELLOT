@@ -11,16 +11,24 @@ This is a project under the topic of Data Engineering, which includes an ETL pro
 
 ## Step 1
 
-In the root of this GitHub repository there is a .cpp file, you must compile it to obtain data files such as Vouchers, Bills, Inventory and Prices, covering the years from 2005 up to 2022. Notice that this files are fictional, and the compiling process may take a couple of hours until is finished.
+First up, clone this repository into your system, using the following command in the cmd:
+
+```bash
+git clone https://github.com/ItiKvnAlf/O-CELLOT.git
+```
+
+or download the ZIP file in the Code section.
+
+In the root of this repository there is a .cpp file, you must compile it to obtain data files such as Vouchers, Bills, Inventory and Prices, covering the years from 2005 up to 2022. Notice that this files are fictional, and the compiling process may take a couple of hours until is finished.
 
 ## Step 2
 
 For purposes of this project, the new folders (Vouchers, Bills, Inventory and Prices) must be at the root, at the same level as the O'CELLOT folder. For example, if you have the O'CELLOT folder in this route:
 
-- C:\Users\User\O-CELLOT (This is the default route once you clone this repository into your system)
+- C:\Users\User\O-CELLOT (or your default route once you clone this repository into your system)
 - The Data folder must be in the C:\Users\User\ route (ex. C:\Users\User\folder_name)
 
-*Notice that you must put this Data folder name in the .env file. This will be explained in Step 4.*
+*Notice that you must put this data folder name in the .env file. This will be explained in Step 4.*
 
 ## Step 3
 
@@ -28,7 +36,7 @@ Before starting, it is necessary to create and configure a new database to save 
 
 ## Step 4
 
-To configure the name of the Data folder and the connection of the database, you must create a .env file in the O'CELLOT folder, the file must contain the following:
+To configure the name of the data folder and the connection of the database, you must create a .env file in the O'CELLOT folder, the file must contain the following:
 
 ```bash
 DATA_FOLDER=data_folder_name
