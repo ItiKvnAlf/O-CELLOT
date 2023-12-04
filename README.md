@@ -78,6 +78,13 @@ sqlalchemy provides a full suite of well known enterprise-level persistence patt
 pip install SQLAlchemy
 ```
 
+### psycopg2
+psycopg is the most popular PostgreSQL database adapter for the Python programming language. This is the installation command:
+
+```bash
+pip install psycopg2
+```
+
 ## Step 6
 
 Once all the modules are successfully installed, you can run the script; it may take some time, but you should see the results in the terminal, including the time required to complete each operation, the total amount of files in each folder and the first 5 rows of one of the DataFrames.
