@@ -1,8 +1,8 @@
 import os
 import time
 import pandas as pd
-from sqlalchemy import create_engine
 from dotenv import load_dotenv
+from sqlalchemy import create_engine
 
 load_dotenv() # Cargar variables de entorno
 
@@ -128,44 +128,6 @@ def extract_prices():
     print('\n-\tTiempo de ejecución carpeta Precio:', execution_time, 'segundos') # Imprime el tiempo de ejecución
     return prices_dataframes
 
-# extract data --------------------------------------
-vouchers = extract_vouchers()
-bills = extract_bills()
-inventory = extract_inventory()
-prices = extract_prices()
-
-# rename columns for postgresql ----------------
-vouchers.columns = [c.lower().replace(' ', '_') for c in vouchers.columns]
-bills.columns = [c.lower().replace(' ', '_') for c in bills.columns]
-inventory.columns = [c.lower().replace(' ', '_') for c in inventory.columns]
-prices.columns = [c.lower().replace(' ', '_') for c in prices.columns]
-
-# create engine --------------------------------------
-engine = create_engine(os.getenv('DATABASE_URL')) # DATABASE_URL es una variable de entorno que contiene la cadena de conexión a la base de datos
-
-# create table -------------------------------------
-vouchers.to_sql('voucher',
-          con=engine,
-          if_exists='replace',
-          index=False
-          )
-bills.to_sql('bill',
-            con=engine,
-            if_exists='replace',
-            index=False
-            )
-inventory.to_sql('inventory',
-                 con=engine,
-                 if_exists='replace',
-                 index=False
-                 )
-prices.to_sql('price',
-                con=engine,
-                if_exists='replace',
-                index=False
-                )
-
-"""
 vouchers = extract_vouchers()
 print('-\tCantidad de archivos Boletas:', len(vouchers)) #Imprime la cantidad de boletas
 print('\n',vouchers[0].head())
@@ -181,4 +143,29 @@ print('\n',inventory[0].head())
 prices = extract_prices()
 print('-\tCantidad de archivos Precios:', len(prices))
 print('\n',prices[0].head())
+
+"""
+engine = create_engine(os.getenv('DATABASE_URL')) # DATABASE_URL es una variable de entorno que contiene la cadena de conexión a la base de datos
+
+vouchers[0].to_sql('voucher',
+          con=engine,
+          if_exists='replace',
+          index=False
+          )
+bills[0].to_sql('bill',
+            con=engine,
+            if_exists='replace',
+            index=False
+            )
+inventory[0].to_sql('inventory',
+                 con=engine,
+                 if_exists='replace',
+                 index=False
+                 )
+prices[0].to_sql('price',
+                con=engine,
+                if_exists='replace',
+                index=False
+                )
+engine.dispose() # Cerrar conexión a la base de datos
 """
