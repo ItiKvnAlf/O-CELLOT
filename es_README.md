@@ -11,16 +11,24 @@ Este es un proyecto bajo el área de Ingeniería de Datos, el cual incluye un pr
 
 ## Paso 1
 
-En la raíz de este repositorio de GitHub hay un archivo .cpp, debes compilarlo para obtener archivos de datos como Boletas, Facturas, Inventario y Precios, cubriendo los años desde 2005 hasta 2022. Hay que tomar en cuenta que estos archivos son ficticios, y el el proceso de compilación puede tardar un par de horas hasta que finalice.
+En primer lugar, se debe clonar este repositorio en el sistema, usando el siguiente comando en el cmd (Símbolo del sistema):
+
+```bash
+git clone https://github.com/ItiKvnAlf/O-CELLOT.git
+```
+
+o también se puede descargar el archivo ZIP en la sección Code.
+
+En la raíz de este repositorio hay un archivo .cpp, debes compilarlo para obtener archivos de datos como Boletas, Facturas, Inventario y Precios, cubriendo los años desde 2005 hasta 2022. Hay que tomar en cuenta que estos archivos son ficticios, y el el proceso de compilación puede tardar un par de horas hasta que finalice.
 
 ## Paso 2
 
-Para efectos de este proyecto, las nuevas carpetas (Boletas, Facturas, Inventario y Precios) deben estar en la raíz, al mismo nivel que la carpeta O'CELLOT. Por ejemplo, si tienes la carpeta O'CELLOT en esta ruta:
+Para efectos de este proyecto, las nuevas carpetas (Boletas, Facturas, Inventario y Precios) deben estar en la raíz, al mismo nivel que la carpeta O'CELLOT. Por ejemplo, si se tiene la carpeta O'CELLOT en esta ruta:
 
-- C:\Users\nombre_usuario\O-CELLOT (Esta es la ruta por defecto al clonar el repositorio en el sistema)
+- C:\Users\nombre_usuario\O-CELLOT (o bien, la ruta por defecto al clonar el repositorio en el sistema)
 - La carpeta de datos debe estar en la ruta C:\Users\User\ (ej. C:\Users\nombre_usuario\nombre_carpeta)
 
-*Hay que tomar en cuenta que se debe colocar el nombre de esta carpeta de datos en el archivo .env. Esto se explicará con más detalle en el Paso 4.*
+*Hay que tomar en consideración que se debe colocar el nombre de esta carpeta de datos en el archivo .env. Esto se explicará con más detalle en el Paso 4.*
 
 ## Paso 3
 
