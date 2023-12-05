@@ -6,14 +6,13 @@ from sqlalchemy import create_engine
 
 load_dotenv() # Cargar variables de entorno
 
-data_folder = 'proyectoidatos2023II'
 current_folder = os.getcwd()  # Carpeta actual
 
 def extract_vouchers():
     
     init_time = time.time() #Variable para calcular tiempo de ejecución
      
-    vouchers_root_folder = os.path.join(current_folder, '..', data_folder , 'Boletas')  # Carpeta de boletas
+    vouchers_root_folder = os.path.join(current_folder, '..', os.getenv('DATA_FOLDER') , 'Boletas')  # Carpeta de boletas
     vouchers_dataframes = [] # Lista de dataframes de boletas
     
     for foldername, subfolders, filenames in os.walk(vouchers_root_folder): # Recorre la carpeta de boletas por cada carpeta y archivo
@@ -28,7 +27,7 @@ def extract_vouchers():
                         parts = line.split(',')
                         
                         # Los campos intermedios son productos, y se unen nuevamente en un solo campo
-                        products = ','.join(parts[1:-1])
+                        products = parts[1:-1]
                         
                         rows.append([parts[0], products, parts[-1]])
     
@@ -45,7 +44,7 @@ def extract_bills():
     
     init_time = time.time() #Variable para calcular tiempo de ejecución
     
-    bills_root_folder = os.path.join(current_folder, '..',data_folder, 'Facturas')  # Carpeta de facturas
+    bills_root_folder = os.path.join(current_folder, '..',os.getenv('DATA_FOLDER') , 'Facturas')  # Carpeta de facturas
     bills_dataframes = [] # Lista de dataframes de facturas
     
     for foldername, subfolders, filenames in os.walk(bills_root_folder): # Recorre la carpeta de facturas por cada carpeta y archivo
@@ -74,7 +73,7 @@ def extract_inventory():
     
     init_time = time.time() #Variable para calcular tiempo de ejecución
     
-    inventory_root_folder = os.path.join(current_folder, '..',data_folder, 'Inventario')  # Carpeta de inventario
+    inventory_root_folder = os.path.join(current_folder, '..',os.getenv('DATA_FOLDER') , 'Inventario')  # Carpeta de inventario
     inventory_dataframes = [] # Lista de dataframes de inventario
     
     for foldername, subfolders, filenames in os.walk(inventory_root_folder): # Recorre la carpeta de inventario por cada carpeta y archivo
@@ -103,7 +102,7 @@ def extract_prices():
     
     init_time = time.time() #Variable para calcular tiempo de ejecución
     
-    prices_root_folder = os.path.join(current_folder, '..', data_folder, 'Precios')  # Carpeta de precios
+    prices_root_folder = os.path.join(current_folder, '..', os.getenv('DATA_FOLDER') , 'Precios')  # Carpeta de precios
     prices_dataframes = [] # Lista de dataframes de precios
     
     for foldername, subfolders, filenames in os.walk(prices_root_folder): # Recorre la carpeta de precios por cada carpeta y archivo
@@ -144,28 +143,31 @@ prices = extract_prices()
 print('-\tCantidad de archivos Precios:', len(prices))
 print('\n',prices[0].head())
 
-"""
 engine = create_engine(os.getenv('DATABASE_URL')) # DATABASE_URL es una variable de entorno que contiene la cadena de conexión a la base de datos
 
-vouchers[0].to_sql('voucher',
-          con=engine,
-          if_exists='replace',
-          index=False
-          )
-bills[0].to_sql('bill',
-            con=engine,
-            if_exists='replace',
-            index=False
-            )
-inventory[0].to_sql('inventory',
-                 con=engine,
-                 if_exists='replace',
-                 index=False
-                 )
-prices[0].to_sql('price',
-                con=engine,
-                if_exists='replace',
-                index=False
-                )
+for i, df in enumerate(vouchers):
+    table_name = 'voucher'  # Puedes ajustar el nombre de la tabla según tus necesidades
+    df.to_sql(table_name, con=engine, if_exists='append', index=False)
+
+print('Se han insertado los datos de boletas')
+
+for i, df in enumerate(bills):
+    table_name = 'bill'  # Puedes ajustar el nombre de la tabla según tus necesidades
+    df.to_sql(table_name, con=engine, if_exists='append', index=False)
+
+print('Se han insertado los datos de facturas')
+
+for i, df in enumerate(inventory):
+    table_name = 'inventory'  # Puedes ajustar el nombre de la tabla según tus necesidades
+    df.to_sql(table_name, con=engine, if_exists='append', index=False)
+
+print('Se han insertado los datos de inventario')
+
+for i, df in enumerate(prices):
+    table_name = 'price'  # Puedes ajustar el nombre de la tabla según tus necesidades
+    df.to_sql(table_name, con=engine, if_exists='append', index=False)
+
+print('Se han insertado los datos de precios')
+
 engine.dispose() # Cerrar conexión a la base de datos
-"""
+print('Se ha cerrado la conexión a la base de datos')
