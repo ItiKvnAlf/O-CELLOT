@@ -23,10 +23,11 @@ In the root of this repository there is a .cpp file, you must compile it to obta
 
 ## Step 2
 
-For purposes of this project, the new folders (Vouchers, Bills, Inventory and Prices) must be at the root, at the same level as the O'CELLOT folder. For example, if you have the O'CELLOT folder in this route:
+For purposes of this project, the new folders (Vouchers, Bills, Inventory and Prices) must be at the root (same level as the O'CELLOT folder). For example, if you have the O'CELLOT folder in this route:
 
 - C:\Users\User\O-CELLOT (or your default route once you clone this repository into your system)
-- The Data folder must be in the C:\Users\User\ route (ex. C:\Users\User\folder_name)
+
+The data folder must be in the 'C:\Users\User\' route (ex. C:\Users\User\folder_name)
 
 *Notice that you must put this data folder name in the .env file. This will be explained in Step 4.*
 
@@ -56,7 +57,6 @@ in which:
 
 Once the data is obtained and the .env file is fully configurated, you must run python file 'etl_script.py'. But keep in mind that you must install the corresponding modules, which are:
 
-### time
 ### pandas
 pandas is an open source, BSD-licensed library providing high-performance, easy-to-use data structures and data analysis tools for the Python programming language. It can be installed via pip:
 
@@ -88,3 +88,5 @@ pip install psycopg2
 ## Step 6
 
 Once all the modules are successfully installed, you can run the script; it may take some time, but you should see the results in the terminal, including the time required to complete each operation, the total amount of files in each folder and the first 5 rows of one of the DataFrames.
+
+*Notice that each time the python script is running, the tables of the database must be empty, otherwise the data will be duplicated.*
