@@ -8,6 +8,37 @@ load_dotenv() # Cargar variables de entorno
 
 current_folder = os.getcwd()  # Carpeta actual
 
+def extract_prices():
+    
+    init_time = time.time() #Variable para calcular tiempo de ejecución
+    
+    prices_root_folder = os.path.join(current_folder, '..', os.getenv('DATA_FOLDER') , 'Precios')  # Carpeta de precios
+    prices_dataframes = [] # Lista de dataframes de precios
+    
+    for foldername, subfolders, filenames in os.walk(prices_root_folder): # Recorre la carpeta de precios por cada carpeta y archivo
+        year = foldername.split('\\')[-2]
+        month = foldername.split('\\')[-1]
+        for filename in filenames:  # Recorre los archivos de cada carpeta
+            if filename.endswith('.csv'):   # Si el archivo es un csv
+                file_path = os.path.join(foldername, filename)  # Ruta del archivo
+                rows = []
+                with open(file_path, 'r') as file:
+                    next(file)
+                    for line in file:
+                        line = line.strip()
+                        parts = line.split(',')
+                        
+                        rows.append([parts[0], parts[1],year,month])
+    
+                df = pd.DataFrame(rows, columns=['Identificador', 'Precio', 'Año', 'Mes']) # Crear un DataFrame de pandas
+    
+                prices_dataframes.append(df)  # Agrega el dataframe a la lista
+    
+    execution_time = round(time.time() - init_time, 3) # Calcular el tiempo de ejecución
+    
+    print('\n-\tTiempo de ejecución carpeta Precio:', execution_time, 'segundos') # Imprime el tiempo de ejecución
+    return prices_dataframes
+
 def extract_vouchers():
     
     init_time = time.time() #Variable para calcular tiempo de ejecución
@@ -98,76 +129,50 @@ def extract_inventory():
     print('\n-\tTiempo de ejecución carpeta Inventario:', execution_time, 'segundos') # Imprime el tiempo de ejecución
     return inventory_dataframes
 
-def extract_prices():
-    
-    init_time = time.time() #Variable para calcular tiempo de ejecución
-    
-    prices_root_folder = os.path.join(current_folder, '..', os.getenv('DATA_FOLDER') , 'Precios')  # Carpeta de precios
-    prices_dataframes = [] # Lista de dataframes de precios
-    
-    for foldername, subfolders, filenames in os.walk(prices_root_folder): # Recorre la carpeta de precios por cada carpeta y archivo
-        for filename in filenames:  # Recorre los archivos de cada carpeta
-            if filename.endswith('.csv'):   # Si el archivo es un csv
-                file_path = os.path.join(foldername, filename)  # Ruta del archivo
-                rows = []
-                with open(file_path, 'r') as file:
-                    next(file)
-                    for line in file:
-                        line = line.strip()
-                        parts = line.split(',')
-                        
-                        rows.append([parts[0], parts[1]])
-    
-                df = pd.DataFrame(rows, columns=['Identificador', 'Precio']) # Crear un DataFrame de pandas
-    
-                prices_dataframes.append(df)  # Agrega el dataframe a la lista
-    
-    execution_time = round(time.time() - init_time, 3) # Calcular el tiempo de ejecución
-    
-    print('\n-\tTiempo de ejecución carpeta Precio:', execution_time, 'segundos') # Imprime el tiempo de ejecución
-    return prices_dataframes
+def transform_vouchers(vouchers: list, prices: list):
+    print()
+
+prices = extract_prices()
+print('-\tCantidad de archivos Precios:', len(prices)) #Imprime la cantidad de precios
+print('\n',prices[0].head())
 
 vouchers = extract_vouchers()
 print('-\tCantidad de archivos Boletas:', len(vouchers)) #Imprime la cantidad de boletas
 print('\n',vouchers[0].head())
 
 bills = extract_bills()
-print('-\tCantidad de archivos Facturas:', len(bills))
+print('-\tCantidad de archivos Facturas:', len(bills)) #Imprime la cantidad de facturas
 print('\n',bills[0].head())
 
 inventory = extract_inventory()
-print('-\tCantidad de archivos Inventario:', len(inventory))
+print('-\tCantidad de archivos Inventario:', len(inventory)) #Imprime la cantidad de inventario
 print('\n',inventory[0].head())
-
-prices = extract_prices()
-print('-\tCantidad de archivos Precios:', len(prices))
-print('\n',prices[0].head())
 
 engine = create_engine(os.getenv('DATABASE_URL')) # DATABASE_URL es una variable de entorno que contiene la cadena de conexión a la base de datos
 
-for i, df in enumerate(vouchers):
-    table_name = 'voucher'  # Puedes ajustar el nombre de la tabla según tus necesidades
+for i, df in enumerate(prices):
+    table_name = 'price'
     df.to_sql(table_name, con=engine, if_exists='append', index=False)
 
-print('Se han insertado los datos de boletas')
+print('\nSe han insertado los datos de precios')
+
+for i, df in enumerate(vouchers):
+    table_name = 'voucher'
+    df.to_sql(table_name, con=engine, if_exists='append', index=False)
+
+print('\nSe han insertado los datos de boletas')
 
 for i, df in enumerate(bills):
-    table_name = 'bill'  # Puedes ajustar el nombre de la tabla según tus necesidades
+    table_name = 'bill'
     df.to_sql(table_name, con=engine, if_exists='append', index=False)
 
-print('Se han insertado los datos de facturas')
+print('\nSe han insertado los datos de facturas')
 
 for i, df in enumerate(inventory):
-    table_name = 'inventory'  # Puedes ajustar el nombre de la tabla según tus necesidades
+    table_name = 'inventory'
     df.to_sql(table_name, con=engine, if_exists='append', index=False)
 
-print('Se han insertado los datos de inventario')
-
-for i, df in enumerate(prices):
-    table_name = 'price'  # Puedes ajustar el nombre de la tabla según tus necesidades
-    df.to_sql(table_name, con=engine, if_exists='append', index=False)
-
-print('Se han insertado los datos de precios')
+print('\nSe han insertado los datos de inventario')
 
 engine.dispose() # Cerrar conexión a la base de datos
-print('Se ha cerrado la conexión a la base de datos')
+print('\n\tSe ha cerrado la conexión a la base de datos')
