@@ -85,6 +85,13 @@ psycopg is the most popular PostgreSQL database adapter for the Python programmi
 pip install psycopg2
 ```
 
+### openpyxl
+openpyxl is a Python library to read/write Excel 2010 xlsx/xlsm/xltx/xltm files.
+
+```bash
+pip install openpyxl
+```
+
 ## Step 6: Running the script
 
 Once all the modules are successfully installed, you can run the script; it may take some time, but you should see the results in the terminal, including the time required to complete each operation, the total amount of files in each folder and the first 5 rows of one of the DataFrames.
