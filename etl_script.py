@@ -9,30 +9,6 @@ load_dotenv() # Cargar variables de entorno
 
 current_folder = os.getcwd()  # Carpeta actual
 
-def rename_folders_and_files(root_folder):
-    meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
-
-    for foldername, subfolders, filenames in os.walk(root_folder):
-        for filename in filenames:
-            anio = filename.split('-')[-1].split('.')[0]
-            mes = filename.split('-')[-2]
-            dia = (''.join(filter(str.isdigit, filename.split('-')[0]))).zfill(2)
-            print('Año:', anio, 'Mes:', mes, 'Dia:', dia)
-
-            # Modificar nombres de carpetas (meses) a valores numéricos si están como string
-            if mes.lower() in meses:
-                mes = str(meses.index(mes.lower()) + 1).zfill(2)
-
-            # Modificar nombres de archivos dentro de meses
-            if filename.endswith('.csv'):  # Si el archivo es un csv
-                # Generar el nuevo nombre del archivo
-                new_filename = f'boletas{mes}-{dia}-{anio}.csv'
-
-                file_path = os.path.join(foldername, filename)  # Ruta del archivo
-                new_file_path = os.path.join(foldername, new_filename)  # Ruta del nuevo archivo
-
-                os.rename(file_path, new_file_path)  # Renombrar el archivo
-
 def extract_prices():
     
     init_time = time.time() #Variable para calcular tiempo de ejecución
@@ -181,7 +157,6 @@ def transform_vouchers(vouchers: list, bills: list, products: list):
     print("\n")
     return inventory
 
-# rename_folders_and_files(os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), "Boletas")) # Renombrar carpetas y archivos
 # products = read_products()
 # inventory = transform_vouchers(extract_vouchers(), extract_bills(), products)
 
