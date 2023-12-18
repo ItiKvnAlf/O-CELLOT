@@ -17,8 +17,8 @@ def extract_prices():
     prices_dataframes = [] # Lista de dataframes de precios
     
     for foldername, subfolders, filenames in os.walk(prices_root_folder): # Recorre la carpeta de precios por cada carpeta y archivo
-        year = foldername.split('\\')[-2]
-        month = foldername.split('\\')[-1]
+        year = foldername.split('/')[-2]
+        month = foldername.split('/')[-1]
         for filename in filenames:  # Recorre los archivos de cada carpeta
             if filename.endswith('.csv'):   # Si el archivo es un csv
                 file_path = os.path.join(foldername, filename)  # Ruta del archivo
