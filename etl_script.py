@@ -37,7 +37,7 @@ def extract_prices():
     execution_time = round(time.time() - init_time, 3) # Calcular el tiempo de ejecución
     
     print('\n-\tTiempo de ejecución carpeta Precio:', execution_time, 'segundos') # Imprime el tiempo de ejecución
-    print('\n-\tCantidad de archivos Precios:', len(prices_dataframes)) #Imprime la cantidad de precios
+    print('-\tCantidad de archivos Precios:', len(prices_dataframes)) #Imprime la cantidad de precios
     # print('\n',prices_dataframes[0].head())
     return prices_dataframes
 
@@ -74,7 +74,7 @@ def extract_vouchers():
     execution_time = round(time.time() - init_time, 3) # Calcular el tiempo de ejecución
     
     print('\n-\tTiempo de ejecución carpeta Boletas:', execution_time, 'segundos') # Imprime el tiempo de ejecución
-    print('\n-\tCantidad de archivos Boletas:', len(vouchers_dataframes)) #Imprime la cantidad de boletas
+    print('-\tCantidad de archivos Boletas:', len(vouchers_dataframes)) #Imprime la cantidad de boletas
     # print('\n',vouchers_dataframes[0].head())
     return vouchers_dataframes
 
@@ -108,7 +108,7 @@ def extract_bills():
     execution_time = round(time.time() - init_time, 3) # Calcular el tiempo de ejecución
     
     print('\n-\tTiempo de ejecución carpeta Facturas:', execution_time, 'segundos') # Imprime el tiempo de ejecución
-    print('\n-\tCantidad de archivos Facturas:', len(bills_dataframes)) #Imprime la cantidad de facturas
+    print('-\tCantidad de archivos Facturas:', len(bills_dataframes)) #Imprime la cantidad de facturas
     # print('\n',bills_dataframes[0].head())
     return bills_dataframes
 
@@ -126,7 +126,7 @@ def read_products():
     print('\n-\tTiempo de lectura de la carpeta de Productos:', execution_time, 'segundos') # Imprime el tiempo de ejecución
     return products
 
-def transform_vouchers(vouchers: list, bills: list, products: list):
+def transform_to_inventory(vouchers: list, bills: list, products: list):
 
     init_time = time.time() #Variable para calcular tiempo de ejecución
 
@@ -165,27 +165,33 @@ def transform_vouchers(vouchers: list, bills: list, products: list):
     execution_time = round(time.time() - init_time, 3) # Calcular el tiempo de ejecución
     
     print('\n-\tTiempo de ejecución carpeta Facturas:', execution_time, 'segundos') # Imprime el tiempo de ejecución
-    print('\n-\tCantidad de productos no encontrados:', len(product_not_found)) # Imprime la cantidad de productos no encontrados
-    print('\n-\tCantidad de archivos Inventario:', len(inventory)) #Imprime la cantidad de inventario
+    print('-\tCantidad de productos no encontrados:', len(product_not_found)) # Imprime la cantidad de productos no encontrados
+    print('-\tCantidad de archivos Inventario:', len(inventory)) #Imprime la cantidad de inventario
     # print('\n',inventory[0].head())
     return inventory
 
 def dataframe_to_sql(dataframe: list, table_name: str, engine: Engine):
     init_time = time.time() #Variable para calcular tiempo de ejecución
-    for df in enumerate(dataframe): # Recorre la lista de dataframes de precios
+    for i, df in enumerate(dataframe): # Recorre la lista de dataframes de precios
         df.to_sql(table_name, con=engine, if_exists='append', index=False) # Inserta los datos del dataframe en la tabla
     execution_time = round(time.time() - init_time, 3) # Calcular el tiempo de ejecución
 
     print('\n-\tSe han insertado los datos de', table_name, 'en la base de datos')
-    print('\n-\tTiempo de ejecución:', execution_time, 'segundos') # Imprime el tiempo de ejecución
+    print('-\tTiempo de ejecución:', execution_time, 'segundos') # Imprime el tiempo de ejecución
 
+print('\nIniciando script de ETL')
+print('-----------------------')
+print('\nLeyendo archivos de datos...')
 products = read_products()
 
 prices = extract_prices()
 vouchers = extract_vouchers()
 bills = extract_bills()
-inventory = transform_vouchers(vouchers, bills, products)
 
+print('\nTransformando datos...')
+inventory = transform_to_inventory(vouchers, bills, products)
+
+print('\nInsertando datos en la base de datos POSTGRESQL...')
 engine = create_engine(os.getenv('DATABASE_URL')) # DATABASE_URL es una variable de entorno que contiene la cadena de conexión a la base de datos
 
 dataframe_to_sql(prices, 'precios', engine)
@@ -194,4 +200,4 @@ dataframe_to_sql(bills, 'facturas', engine)
 dataframe_to_sql(inventory, 'inventario', engine)
 
 engine.dispose() # Cerrar conexión a la base de datos
-print('\n\tSe ha cerrado la conexión a la base de datos')
+print('\nSe ha cerrado la conexión a la base de datos')
