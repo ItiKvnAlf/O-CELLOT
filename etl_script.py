@@ -65,7 +65,8 @@ def extract_vouchers():
                         parts = line.split(',')
                         products = parts[1:-1]
                         rows.append([parts[0], products, parts[-1], anio, mes, dia])
-        
+                if products != []:
+                        rows.append([parts[0], products, parts[-1], anio, mes, dia])
                 df = pd.DataFrame(rows, columns=['Boleta', 'Productos', 'Precio Total', 'Anio', 'Mes', 'Dia'])
                 vouchers_dataframes.append(df)
     
