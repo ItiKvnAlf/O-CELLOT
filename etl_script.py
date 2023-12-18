@@ -157,52 +157,51 @@ def transform_vouchers(vouchers: list, bills: list, products: list):
     print("\n")
     return inventory
 
-# products = read_products()
-# inventory = transform_vouchers(extract_vouchers(), extract_bills(), products)
+products = read_products()
 
-# for i, df in enumerate(inventory):
-#     print(df)
-# prices = extract_prices()
-# print('-\tCantidad de archivos Precios:', len(prices)) #Imprime la cantidad de precios
-# print('\n',prices[0].head())
+prices = extract_prices()
+print('-\tCantidad de archivos Precios:', len(prices)) #Imprime la cantidad de precios
+print('\n',prices[0].head())
 
-# vouchers = extract_vouchers()
-# print('-\tCantidad de archivos Boletas:', len(vouchers)) #Imprime la cantidad de boletas
-# print('\n',vouchers[0].head())
+vouchers = extract_vouchers()
+print('-\tCantidad de archivos Boletas:', len(vouchers)) #Imprime la cantidad de boletas
+print('\n',vouchers[0].head())
 
-# bills = extract_bills()
-# print('-\tCantidad de archivos Facturas:', len(bills)) #Imprime la cantidad de facturas
-# print('\n',bills[0].head())
+bills = extract_bills()
+print('-\tCantidad de archivos Facturas:', len(bills)) #Imprime la cantidad de facturas
+print('\n',bills[0].head())
 
-# inventory = extract_inventory()
-# print('-\tCantidad de archivos Inventario:', len(inventory)) #Imprime la cantidad de inventario
-# print('\n',inventory[0].head())
+inventory = transform_vouchers(vouchers, bills, products)
 
-# engine = create_engine(os.getenv('DATABASE_URL')) # DATABASE_URL es una variable de entorno que contiene la cadena de conexión a la base de datos
+for i, df in enumerate(inventory):
+    print(df)
+print('-\tCantidad de archivos Inventario:', len(inventory)) #Imprime la cantidad de inventario
 
-# for i, df in enumerate(prices):
-#     table_name = 'price'
-#     df.to_sql(table_name, con=engine, if_exists='append', index=False)
+engine = create_engine(os.getenv('DATABASE_URL')) # DATABASE_URL es una variable de entorno que contiene la cadena de conexión a la base de datos
 
-# print('\nSe han insertado los datos de precios')
+for i, df in enumerate(prices):
+    table_name = 'price'
+    df.to_sql(table_name, con=engine, if_exists='append', index=False)
 
-# for i, df in enumerate(vouchers):
-#     table_name = 'voucher'
-#     df.to_sql(table_name, con=engine, if_exists='append', index=False)
+print('\nSe han insertado los datos de precios')
 
-# print('\nSe han insertado los datos de boletas')
+for i, df in enumerate(vouchers):
+    table_name = 'voucher'
+    df.to_sql(table_name, con=engine, if_exists='append', index=False)
 
-# for i, df in enumerate(bills):
-#     table_name = 'bill'
-#     df.to_sql(table_name, con=engine, if_exists='append', index=False)
+print('\nSe han insertado los datos de boletas')
 
-# print('\nSe han insertado los datos de facturas')
+for i, df in enumerate(bills):
+    table_name = 'bill'
+    df.to_sql(table_name, con=engine, if_exists='append', index=False)
 
-# for i, df in enumerate(inventory):
-#     table_name = 'inventory'
-#     df.to_sql(table_name, con=engine, if_exists='append', index=False)
+print('\nSe han insertado los datos de facturas')
 
-# print('\nSe han insertado los datos de inventario')
+for i, df in enumerate(inventory):
+    table_name = 'inventory'
+    df.to_sql(table_name, con=engine, if_exists='append', index=False)
 
-# engine.dispose() # Cerrar conexión a la base de datos
-# print('\n\tSe ha cerrado la conexión a la base de datos')
+print('\nSe han insertado los datos de inventario')
+
+engine.dispose() # Cerrar conexión a la base de datos
+print('\n\tSe ha cerrado la conexión a la base de datos')
