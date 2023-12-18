@@ -1,8 +1,6 @@
 import os
 import time
-import pandas as pd
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
 
 load_dotenv() # Cargar variables de entorno
 
@@ -22,7 +20,7 @@ def rename_files(root_folder, type):
 
             # Modificar nombres de archivos dentro de meses
             if mes.lower() in meses: # Si el nombre del mes está en la lista de meses
-                mes = str(meses.index(mes.lower()) + 1).zfill(2)
+                mes = str(meses.index(mes.lower()) + 1).zfill(2) # Se cambia el nombre del mes a un valor numérico
             
             if filename.endswith('.csv'):  # Si el archivo es un csv
                 # Generar el nuevo nombre del archivo
@@ -54,12 +52,12 @@ def rename_folders(root_folder):
 
     execution_time = round(time.time() - init_time, 3) # Calcular el tiempo de ejecución
 
-rename_files(os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), "Boletas"), "boletas") # Renombrar carpetas y archivos en Boletas
-rename_files(os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), "Facturas"), "facturas") # Renombrar carpetas y archivos en Facturas
+rename_files(os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), "Boletas"), "boletas") # Renombrar archivos en Boletas
+rename_files(os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), "Facturas"), "facturas") # Renombrar archivos en Facturas
 
-rename_folders(os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), "Boletas")) # Renombrar carpetas y archivos en Boletas
-rename_folders(os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), "Facturas")) # Renombrar carpetas y archivos en Facturas
-rename_folders(os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), "Precios")) # Renombrar carpetas y archivos en Precios
+rename_folders(os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), "Boletas")) # Renombrar carpetas en Boletas
+rename_folders(os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), "Facturas")) # Renombrar carpetas en Facturas
+rename_folders(os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), "Precios")) # Renombrar carpetas en Precios
 
 execution_time = round(time.time() - init_time, 3) # Calcular el tiempo de ejecución
 print('\n-\tTiempo de ejecución:', execution_time, 'segundos') # Imprime el tiempo de ejecución

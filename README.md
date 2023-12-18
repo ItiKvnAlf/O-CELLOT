@@ -1,99 +1,118 @@
 # O-CELLOT
+
+# Introducción
+
+Este es un proyecto bajo el área de Ingeniería de Datos, el cual incluye un procedimiento ETL para manipular una cierta cantidad de datos, enfocándose en facturas, precios, inventarios y boletas de una pequeña empresa. El principal objetivo de este proyecto es proporcionar una comprensión profunda y aplicada de los procesos inherentes a la ingeniería de datos.
+
 ---
+# Comenzando (Modificar nombres de los archivos/ficheros)
 
-# Introduction
+## Paso 1: Clonando el repositorio
 
-This is a project under the topic of Data Engineering, which includes an ETL procedure to manipulate a certain amount of data, focusing on bills, prices, inventory and vouchers from a small business. The main objective of this proyect is to provide a deep and applied understanding of the processes inherent to data engineering.
-
----
-
-# Getting started
-
-## Step 1: Cloning the repository
-
-First up, clone this repository into your system, using the following command in the cmd:
+En primer lugar, se debe clonar este repositorio en el sistema, usando el siguiente comando en el cmd (Símbolo del sistema):
 
 ```bash
 git clone https://github.com/ItiKvnAlf/O-CELLOT.git
 ```
 
-or download the ZIP file in the Code section.
+o también se puede descargar el archivo ZIP en la sección Code.
 
-In the root of this repository there is a .cpp file, you must compile it to obtain data files such as Vouchers, Bills, Inventory and Prices, covering the years from 2005 up to 2022. Notice that this files are fictional, and the compiling process may take a couple of hours until is finished.
+En la raíz de este repositorio hay un archivo .cpp, debes compilarlo para obtener archivos de datos como Boletas, Facturas, Inventario y Precios, cubriendo los años desde 2005 hasta 2022. Hay que tomar en cuenta que estos archivos son ficticios, y el el proceso de compilación puede tardar un par de horas hasta que finalice.
 
-## Step 2: Folders routes
+## Paso 2: Rutas de las carpetas
 
-For purposes of this project, the new folders (Vouchers, Bills, Inventory and Prices) must be at the root (same level as the O'CELLOT folder). For example, if you have the O'CELLOT folder in this route:
+Para efectos de este proyecto, las nuevas carpetas (Boletas, Facturas, Inventario y Precios) deben estar en la raíz, al mismo nivel que la carpeta O'CELLOT. Por ejemplo, si se tiene la carpeta O'CELLOT en esta ruta:
 
-- C:\Users\User\O-CELLOT (or your default route once you clone this repository into your system)
+- C:\Users\nombre_usuario\O-CELLOT (o bien, la ruta por defecto al clonar el repositorio en el sistema)
 
-The data folder must be in the 'C:\Users\User\' route (ex. C:\Users\User\folder_name)
+La carpeta de datos debe estar en la ruta C:\Users\User\ (ej. C:\Users\nombre_usuario\nombre_carpeta)
 
-*Notice that you must put this data folder name in the .env file. This will be explained in Step 4.*
+*Hay que tomar en consideración que se debe colocar el nombre de esta carpeta de datos en el archivo .env. Esto se explicará con más detalle en el Paso 4.*
 
-## Step 3: Creating a new database
+## Paso 3: Creando una nueva base de datos
 
-Before starting, it is necessary to create and configure a new database to save the data in the ETL process of this project. You can use programs like PgAdmin4 or DBeaver, for instance. Just create a new database and give it a name; the tables will be created from the pyhton script.
+Antes de empezar, es necesario crear y configurar una nueva base de datos para guardar los datos procedentes del proceso ETL de este proyecto. Puedes utilizar, por ejemplo, programas como PgAdmin4 o DBeaver. Simplemente se debe crear una nueva base de datos y asignarle un nombre; las tablas se crearán a partir del script de Python (Paso 6).
 
-## Step 4: Configuring the .env file
+## Paso 4: Configurando el archivo .env
 
-To configure the name of the data folder and the connection of the database, you must create a .env file in the O'CELLOT folder, the file must contain the following:
-
-```bash
-DATA_FOLDER=data_folder_name
-DATABASE_URL=postgresql://pg_username:pg_password@host:5432/database
-```
-
-in which:
-
-- *data_folder_name*: This is the name of the folder in which all the data is saved.
-- *pg_username*: Replace this variable with your database username.
-- *pg_password*: Replace with the password set to access the database.
-- *host*: You can replace this field with the address in which the database is hosted (at this level of production it may be *localhost*)
-- *5432*: This is the port, it is not necessary to modify this value.
-- *database*: Put in this field the name of the database
-
-## Step 5: Installing modules
-
-Once the data is obtained and the .env file is fully configurated, you must run python file 'etl_script.py'. But keep in mind that you must install the corresponding modules, which are:
-
-### pandas
-pandas is an open source, BSD-licensed library providing high-performance, easy-to-use data structures and data analysis tools for the Python programming language. It can be installed via pip:
+Para configurar el nombre de la carpeta de datos y la conexión de la base de datos, debe crear un archivo .env en la carpeta O'CELLOT, el archivo debe contener lo siguiente:
 
 ```bash
-pip install pandas
+DATA_FOLDER=nombre_carpeta_datos
+DATABASE_URL=postgresql://pg_usuario:pg_contraseña@host:5432/nombre_base_datos
 ```
+
+en donde:
+
+- *nombre_carpeta_datos*: Este es el nombre de la carpeta en donde se encuentran todos los datos.
+- *pg_usuario*: Reemplaza esta variable con el nombre de usuario con el que se creo la base de datos.
+- *pg_contraseña*: Modifica este valor con la contraseña configurada para acceder a la base de datos.
+- *host*: Puedes reemplazar esta variable con la dirección en donde la base de datos esta alojada (en este nivel de producción se utiliza usualmente *localhost*)
+- *5432*: Este es el puerto, no es necesario modificar este valor.
+- *nombre_base_datos*: Coloca en este campo el nombre asignada a la base de datos.
+---
+# Modificando los nombres de archivos/ficheros
+
+Para garantizar que la lectura por parte del script ETL se realice de forma ordenada se hizo necesaria la implementación de un código que modifica los nombres de carpetas y archivos específicos, de tal forma que no hay problemas con el orden de lectura (Ej. Los meses, que se leen de manera alfabética)
+
+## Instalación de módulos
+
+Para que la modificación de los archivos se realice correctamente, es necesario instalar el siguiente módulo, el cual es necesario para leer la carpeta en donde están los datos:
 
 ### python-dotenv
-Python-dotenv reads key-value pairs from a .env file and can set them as environment variables. To install it, you must type the following:
+Python-dotenv lee pares clave-valor de un archivo .env y puede configurarlos como variables de entorno. Para instalarlo debes escribir lo siguiente:
 
 ```bash
 pip install python-dotenv
 ```
 
+## Ejecutando el código modify_folders.py
+
+Una vez instalado el módulo para trabajar con el .env, se debe correr el código con el nombre modify_folders.py, asegurandose de tener en la carpeta mencionada en el .env todos los datos necesarios (Boletas, Facturas y Precios), la carpeta de Inventario se deja de lado, debido a la inconsistencia de las cantidades entre varios productos.
+
+Una vez terminada la ejecución, todas las carpetas de los meses deben para a un nombre con este formato: '*año-mes*'.
+A su vez, cada archivo dentro de estas carpetas (En Boletas y Facturas) debe tener como nombre lo siguiente: 'boletas*año-mes-dia*' (Boletas) y 'facturas*año-mes-dia*' (Facturas).
+
+**Nota: el código fue creado en un entorno de Windows, por lo que su funcionamiento en otros sistemas operativos no está garantizado. En Mac, por ejemplo, es necesario modificar las líneas de código que tengan este formato: *anio = foldername.split('\\')[-2]* al siguiente *anio = foldername.split('/')[-2]*, reemplazando '\\' por '/'. Además es necesario controlar los archivos ocultos dentro de las carpeta, como .DS_Store**
+
+---
+
+# Script ETL de Python
+
+## Instalando los modulos
+
+Una vez que se obtienen los datos y el archivo .env está completamente configurado, se debe ejecutar el archivo Python 'etl_script.py'. Pero hay que tener en cuenta que se deben instalar los módulos correspondientes, que son:
+
+### pandas
+pandas es una biblioteca de código abierto con licencia BSD que proporciona estructuras de datos y herramientas de análisis de datos de alto rendimiento y fáciles de usar para el lenguaje de programación Python. Se puede instalar mediante pip:
+
+```bash
+pip install pandas
+```
+
 ### sqlalchemy
-sqlalchemy provides a full suite of well known enterprise-level persistence patterns, designed for efficient and high-performing database access, adapted into a simple and Pythonic domain language. This is the installation method:
+sqlalchemy está diseñado para un acceso eficiente y de alto rendimiento a bases de datos, adaptado a un lenguaje de dominio simple. Este es el método de instalación:
 
 ```bash
 pip install SQLAlchemy
 ```
 
 ### psycopg2
-psycopg is the most popular PostgreSQL database adapter for the Python programming language. This is the installation command:
+psycopg es el adaptador de base de datos PostgreSQL más popular para el lenguaje de programación Python. Este es el comando de instalación:
 
 ```bash
 pip install psycopg2
 ```
 
 ### openpyxl
-openpyxl is a Python library to read/write Excel 2010 xlsx/xlsm/xltx/xltm files.
+openpyxl es una librería de Python para leer/escribir archivos Excel 2010 xlsx/xlsm/xltx/xltm.
 
 ```bash
 pip install openpyxl
 ```
 
-## Step 6: Running the script
+## Ejecutando el script de pyhton
 
-Once all the modules are successfully installed, you can run the script; it may take some time, but you should see the results in the terminal, including the time required to complete each operation, the total amount of files in each folder and the first 5 rows of one of the DataFrames.
+Una vez que todos los módulos estén instalados correctamente, ejecutar el script; Puede llevar algo de tiempo, pero se deberían ver los resultados en la terminal, incluido el tiempo necesario para completar cada operación, la cantidad total de archivos en cada carpeta y las primeras 5 filas de uno de los DataFrames.
 
-*Notice that each time the python script is running, the tables of the database must be empty, otherwise the data will be duplicated.*
+*Tomar en consideración que antes de ejecutar el script es necesario que las tablas de la base de datos estén vacías, de lo contrario los datos se podrían duplicar*
