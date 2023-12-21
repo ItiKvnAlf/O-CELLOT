@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Página de Inicio{% endblock %}
+
+{% block content %}
+    <h1>Gráficos de Ventas</h1>
+
+    <div class="grafico">
+        {{ grafico1|safe }}
+    </div>
+
+    <div class="grafico">
+        {{ grafico2|safe }}
+    </div>
+{% endblock %}
