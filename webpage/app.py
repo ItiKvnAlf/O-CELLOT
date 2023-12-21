@@ -27,5 +27,21 @@ def home():
     grafico2 = generar_otro_grafico_barras()
     return render_template('home.html', grafico1=grafico1, grafico2=grafico2)
 
+@app.route('/products')
+def products():
+    return render_template('products.html')
+
+@app.route('/inventory')
+def inventory():
+    return render_template('inventory.html')
+
+@app.route('/benefits')
+def benefits():
+    return render_template('benefits.html')
+
+@app.route('/providers')
+def providers():
+    return render_template('providers.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

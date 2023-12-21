@@ -1,2 +1,52 @@
+.container {
+    display: flex;
+    flex-direction: row; /* Cambia a column */
+}
 
-/* Agrega un selector o una regla válida aquí */
+.sidebar {
+    width: 20%;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to bottom, #3498db, #2980b9); /* Degradado azul */
+    color: #ecf0f1; /* Color del texto */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #ecf0f1; /* Color del texto */
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.sidebar a:hover {
+    color: #ffffff; /* Cambiar color al pasar el mouse */
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+#content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.grafico {
+    margin-bottom: 20px;
+}
