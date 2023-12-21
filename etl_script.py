@@ -63,12 +63,13 @@ def extract_vouchers():
                         parts = line.split(',')
                         
                         # Los campos intermedios son productos, y se unen nuevamente en un solo campo
-                        products = parts[1:-1]
+                        products = parts[1:-1]  
                         
-                        rows.append([parts[0], products, parts[-1], anio, mes, dia])
-    
+                        if products != [] and int(parts[-1]) > 0:
+                            rows.append([parts[0], products, int(parts[-1]), anio, mes, dia])
+
                 df = pd.DataFrame(rows, columns=['Boleta', 'Productos', 'Precio Total', 'Anio', 'Mes', 'Dia']) # Crear un DataFrame de pandas
-    
+
                 vouchers_dataframes.append(df)  # Agrega el dataframe a la lista
     
     execution_time = round(time.time() - init_time, 3) # Calcular el tiempo de ejecución
