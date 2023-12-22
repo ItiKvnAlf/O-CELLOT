@@ -1,0 +1,16 @@
+<!-- templates/products.html -->
+{% extends 'base.html' %}
+
+{% block title %}Costos{% endblock %}
+
+{% block content %}
+<!-- CONTENIDO VA ACÁ-->
+<main class="main-content">
+    <h1>Gráficos de Costos</h1>
+
+    <section id="seccion-costos" class="grafico">
+        <h2>Costos</h2>
+        {{ grafico_costos | safe}}
+    </section>
+</main>
+{% endblock %}

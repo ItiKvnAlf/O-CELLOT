@@ -225,12 +225,12 @@ print('\nIniciando script de ETL')
 print('-----------------------')
 # print('\nLeyendo archivos de datos...')
 # products = read_products()
-products_list = read_all_products()
-providers_list = read_all_providers()
+# products_list = read_all_products()
+# providers_list = read_all_providers()
 
 # prices = extract_prices()
 # vouchers = extract_vouchers()
-# bills = extract_bills()
+bills = extract_bills()
 
 # print('\nTransformando datos...')
 # inventory = transform_to_inventory(vouchers, bills, products)
@@ -240,10 +240,10 @@ engine = create_engine(os.getenv('DATABASE_URL')) # DATABASE_URL es una variable
 
 # dataframe_to_sql(prices, 'precios', engine)
 # dataframe_to_sql(vouchers, 'boletas', engine)
-# dataframe_to_sql(bills, 'facturas', engine)
+dataframe_to_sql(bills, 'facturas', engine)
 # dataframe_to_sql(inventory, 'inventario', engine)
-dataframe_to_sql(products_list, 'productos', engine)
-dataframe_to_sql(providers_list, 'proveedores', engine)
+# dataframe_to_sql(products_list, 'productos', engine)
+# dataframe_to_sql(providers_list, 'proveedores', engine)
 
 engine.dispose() # Cerrar conexión a la base de datos
 print('\nSe ha cerrado la conexión a la base de datos')

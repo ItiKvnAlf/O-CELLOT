@@ -1,0 +1,15 @@
+<!-- templates/products.html -->
+{% extends 'base.html' %}
+
+{% block title %}Proveedores{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <h1>Gráficos de Proveedores</h1>
+
+    <section id="seccion-proveedores" class="grafico">
+        <h2>Proveedores</h2>
+        {{ grafico_proveedor | safe}}
+    </section>
+</main>
+{% endblock %}

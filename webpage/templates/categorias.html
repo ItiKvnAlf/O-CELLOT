@@ -1,21 +1,16 @@
 <!-- templates/products.html -->
 {% extends 'base.html' %}
 
-{% block title %}Productos{% endblock %}
+{% block title %}Categorías{% endblock %}
 
 {% block content %}
 <!-- CONTENIDO VA ACÁ-->
-
         <main class="main-content">
-            <h1>Gráficos de Productos</h1>
+            <h1>Gráficos de Categorías</h1>
 
             <section id="seccion-producto" class="grafico">
                 <h2>Tiempo</h2>
-            </section>
-
-            <section id="seccion-proveedor" class="grafico">
-                <h2>Gráfico de Proveedor</h2>
-                {{ grafico2|safe }}
+                {{ grafico_categorias | safe}}
             </section>
         </main>
 {% endblock %}

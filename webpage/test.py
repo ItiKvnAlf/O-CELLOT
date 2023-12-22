@@ -17,28 +17,24 @@ conn = psycopg2.connect(
     port=DB_PORT
 )
 
-categoria_param = 'Bebés'
-subcategoria_param = None
+categoria_param = 'Bebé'
+subcategoria_param = 'Pañales'
 
 # Replace the date parameters with actual values or variables
 anio_param = '2022'
-mes_param = '12'
-dia_param = '31'
 
 # Construct the SQL query with parameter placeholders
 sql_query = """
     SELECT
         p."Categoría",
         p."Sub-categoría",
-        SUM(CAST(f."Precio Total" AS numeric)) AS Costo_Total
+        CAST(SUM(CAST(f."Precio Total" AS numeric)) AS text) AS Costo_Total
     FROM
         facturas f
     JOIN
         productos p ON f."Producto" = p."ID"
     WHERE
         f."Anio" = %s
-        AND f."Mes" = %s
-        AND f."Dia" = %s
         AND (
             p."Categoría" = %s OR
             %s IS NULL
@@ -53,7 +49,7 @@ sql_query = """
 
 # Execute the query with parameters
 with conn.cursor() as cursor:
-    cursor.execute(sql_query, (anio_param, mes_param, dia_param, categoria_param, categoria_param, subcategoria_param, subcategoria_param))
+    cursor.execute(sql_query, (anio_param, categoria_param, categoria_param, subcategoria_param, subcategoria_param))
     result = cursor.fetchall()
 
 # Do something with the result, e.g., print it
