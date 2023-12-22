@@ -180,25 +180,70 @@ def dataframe_to_sql(dataframe: list, table_name: str, engine: Engine):
     print('\n-\tSe han insertado los datos de', table_name, 'en la base de datos')
     print('-\tTiempo de ejecución:', execution_time, 'segundos') # Imprime el tiempo de ejecución
 
+
+def read_all_products():
+    folder = os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), 'Productos')
+    products_list = []
+
+    for filename in os.listdir(folder):
+        if filename.endswith('.xlsx'):
+            file_path = os.path.join(folder, filename)
+            excel = pd.read_excel(file_path)
+
+            rows = []
+
+            for index, row in excel.iterrows():
+                rows.append([row['ID'], row['Categoría'], row['Sub-categoría'], row['Nombre']])
+
+            df = pd.DataFrame(rows, columns=excel.columns)
+
+            products_list.append(df)
+
+    return products_list
+
+def read_all_providers():
+    folder = os.path.join(current_folder, '..', os.getenv('DATA_FOLDER'), 'Proveedores')
+    providers_list = []
+
+    for filename in os.listdir(folder):
+        if filename.endswith('.xlsx'):
+            file_path = os.path.join(folder, filename)
+            excel = pd.read_excel(file_path)
+
+            rows = []
+
+            for index, row in excel.iterrows():
+                rows.append([row['ID'], row['Proveedor'], row['Contacto comercial'], row['Email'], row['Teléfono']])
+
+            df = pd.DataFrame(rows, columns=excel.columns)
+
+            providers_list.append(df)
+
+    return providers_list
+
 print('\nIniciando script de ETL')
 print('-----------------------')
-print('\nLeyendo archivos de datos...')
-products = read_products()
+# print('\nLeyendo archivos de datos...')
+# products = read_products()
+products_list = read_all_products()
+providers_list = read_all_providers()
 
-prices = extract_prices()
-vouchers = extract_vouchers()
-bills = extract_bills()
+# prices = extract_prices()
+# vouchers = extract_vouchers()
+# bills = extract_bills()
 
-print('\nTransformando datos...')
-inventory = transform_to_inventory(vouchers, bills, products)
+# print('\nTransformando datos...')
+# inventory = transform_to_inventory(vouchers, bills, products)
 
 print('\nInsertando datos en la base de datos POSTGRESQL...')
 engine = create_engine(os.getenv('DATABASE_URL')) # DATABASE_URL es una variable de entorno que contiene la cadena de conexión a la base de datos
 
-dataframe_to_sql(prices, 'precios', engine)
-dataframe_to_sql(vouchers, 'boletas', engine)
-dataframe_to_sql(bills, 'facturas', engine)
-dataframe_to_sql(inventory, 'inventario', engine)
+# dataframe_to_sql(prices, 'precios', engine)
+# dataframe_to_sql(vouchers, 'boletas', engine)
+# dataframe_to_sql(bills, 'facturas', engine)
+# dataframe_to_sql(inventory, 'inventario', engine)
+dataframe_to_sql(products_list, 'productos', engine)
+dataframe_to_sql(providers_list, 'proveedores', engine)
 
 engine.dispose() # Cerrar conexión a la base de datos
 print('\nSe ha cerrado la conexión a la base de datos')

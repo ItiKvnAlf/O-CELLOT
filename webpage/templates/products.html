@@ -5,4 +5,17 @@
 
 {% block content %}
 <!-- CONTENIDO VA ACÁ-->
+
+        <main class="main-content">
+            <h1>Gráficos de Productos</h1>
+
+            <section id="seccion-producto" class="grafico">
+                <h2>Tiempo</h2>
+            </section>
+
+            <section id="seccion-proveedor" class="grafico">
+                <h2>Gráfico de Proveedor</h2>
+                {{ grafico2|safe }}
+            </section>
+        </main>
 {% endblock %}
