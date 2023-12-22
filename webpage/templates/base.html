@@ -18,7 +18,16 @@
     </style>
 </head>
 <body>
-    <div id="content">
+    <div class="container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="products">Producto</a></li>
+                <li><a href="providers">Proveedor</a></li>
+                <li><a href="benefits">Beneficio</a></li>
+                <li><a href="inventory">Bodega</a></li>
+            </ul>
+        </aside>
         {% block content %}{% endblock %}
     </div>
 </body>

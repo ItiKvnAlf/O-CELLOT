@@ -3,22 +3,12 @@
 {% block title %}Página de Inicio{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <aside class="sidebar">
-            <ul>
-                <li><a href="products">Producto</a></li>
-                <li><a href="providers">Proveedor</a></li>
-                <li><a href="benefits">Beneficio</a></li>
-                <li><a href="inventory">Bodega</a></li>
-            </ul>
-        </aside>
-
         <main class="main-content">
             <h1>Gráficos de Ventas</h1>
 
             <section id="seccion-producto" class="grafico">
                 <h2>Gráfico de Producto</h2>
-                {{ grafico1|safe }}
+                {{ grafico1 | safe}}
             </section>
 
             <section id="seccion-proveedor" class="grafico">
@@ -26,5 +16,4 @@
                 {{ grafico2|safe }}
             </section>
         </main>
-    </div>
 {% endblock %}
